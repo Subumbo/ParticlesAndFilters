@@ -24,13 +24,14 @@ window.sh = window.sh || {};
 	
 	
 	p.initialize = function(x,y) {
-		p.Shape_inititalize();
+		this.Shape_inititalize();
 		this.vx = (Math.random() - .5) * 5;
 		this.vy = (Math.random() - .5) * 5;
 		this.x = x;
 		this.y = y;
-		this.graphics.beginFill('#000000');
-		this.graphics.drawCircle(0,0,5);	
+		this.graphics.beginFill(Graphics.getRGB(Math.round((Math.random() * 255)), Math.round((Math.random() * 255)), Math.round((Math.random() * 255)) ));
+		this.graphics.drawCircle(0,0,1);	
+		//this.cache = tru
 
 	}
 	
@@ -48,13 +49,15 @@ window.sh = window.sh || {};
 
 
 (function() {
+	var canvas = document.getElementById('canvas');
 	var stage = new Stage('canvas');
 	var particles = [];
-	var bitmap = new Bitmap();
+	
+	
+
 	
 	
 	
-	stage.addChild(bitmap);
 	
 	stage.onMouseMove = mouseMove;
 	
@@ -62,9 +65,11 @@ window.sh = window.sh || {};
 	Ticker.addListener(render)
 	
 	function mouseMove(e) {
-		var p = new sh.Particle(e.stageX, e.stageY);
-		stage.addChild(p);
-		particles.push(p)
+		for(var i = 0; i < 2; ++i) {
+			var p = new sh.Particle(e.stageX, e.stageY);
+			particles.push(p)
+			stage.addChild(p);
+		}
 	}
 	
 	
@@ -75,7 +80,7 @@ window.sh = window.sh || {};
 		for(i = 0 ; i < l; ++i ) {
 			p = particles[i];
 			p.update();
-			bitmap.draw(p);
+			//bitmap.draw(p);
 		}
 		
 		while( --i > -1 ) {
@@ -89,6 +94,12 @@ window.sh = window.sh || {};
 		
 		//console.log(particles.length)
 		stage.update();
+		
+		
+		//bitmap.image = Pixastic.process(canvas, "sepia"); 
+		
+
+		
 	} 
 	
 	
